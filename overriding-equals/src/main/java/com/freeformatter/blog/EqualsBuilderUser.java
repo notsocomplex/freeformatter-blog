@@ -56,7 +56,7 @@ public class EqualsBuilderUser {
 			return true;
 		}
 
-		// Is it of the proper type? Will also take car of cases where obj argument is null
+		// Is it of the proper type? Will also take care of cases where obj argument is null
 		if (!(obj instanceof EqualsBuilderUser)) {
 			return false;
 		}

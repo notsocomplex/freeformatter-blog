@@ -12,23 +12,6 @@ import org.junit.Test;
 
 public class EqualsBuilderUserTest {
 
-	/*public static void main(String[] args) throws ParseException {
-
-		EqualsBuilderUser user = new EqualsBuilderUser("Peter Parker", DateUtils.parseDate("1962-08-01", "yyyy-MM-dd"));
-		
-		Set<EqualsBuilderUser> users = new HashSet<EqualsBuilderUser>();
-		users.add(user);
-		
-		EqualsBuilderUser toLookup = new EqualsBuilderUser("peter parker", DateUtils.parseDate("1962-08-01", "yyyy-MM-dd"));
-		EqualsBuilderUser wrongDate = new EqualsBuilderUser("peter parker", DateUtils.parseDate("2013-08-01", "yyyy-MM-dd"));
-		
-		System.out.println("These are not the same instances: " + (users != toLookup));
-		System.out.println("The set contains this object for sure: " + users.contains(user));
-		System.out.println("This is a different instance, but is equal regardless: " + users.contains(toLookup));
-		System.out.println("This instance is not equal because the birth date is different: " + !users.contains(wrongDate));
-			
-	}*/
-	
 	@Test
 	public void testReflexive() throws ParseException {
 		

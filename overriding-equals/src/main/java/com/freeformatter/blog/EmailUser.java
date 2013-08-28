@@ -1,8 +1,5 @@
 package com.freeformatter.blog;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -28,6 +25,10 @@ public class EmailUser {
 		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 
@@ -54,21 +55,6 @@ public class EmailUser {
 		// We need to normalize the email field for the hashCode, else using the contains method
 		// would return false since the String.hashCode method would return a different value!
 		return email.toUpperCase().hashCode();
-	}
-
-	public static void main(String[] args) {
-
-		EmailUser user = new EmailUser("peter.parker@dailybugle.com");
-
-		Set<EmailUser> users = new HashSet<EmailUser>();
-		users.add(user);
-		
-		EmailUser toLookup = new EmailUser("PETER.PARKER@DAILYBUGLE.COM");
-		
-		System.out.println("These are not the same instances: " + (users != toLookup));
-		System.out.println("The set contains this object for sure: " + users.contains(user));
-		System.out.println("This is a different instance, but is equal regardless: " + users.contains(toLookup));
-				
 	}
 
 }

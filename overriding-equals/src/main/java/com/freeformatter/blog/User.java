@@ -1,7 +1,5 @@
 package com.freeformatter.blog;
 
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Example of a User class with an equals method that uses a identifier field of type integer
@@ -13,6 +11,10 @@ public class User {
 	
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	public String getEmail() {
@@ -59,21 +61,6 @@ public class User {
 	@Override
 	public int hashCode() {
 		return id.hashCode();
-	}
-
-	public static void main(String[] args) {
-
-		User user = new User(1, "peter.parker@dailybugle.com");
-		
-		Set<User> users = new HashSet<User>();
-		users.add(user);
-		
-		User toLookup = new User(1, "peter.parker@dailybugle.com");
-		
-		System.out.println("These are not the same instances: " + (users != toLookup));
-		System.out.println("The set contains this object for sure: " + users.contains(user));
-		System.out.println("This is a different instance, but is equal regardless: " + users.contains(toLookup));
-			
 	}
 	
 }

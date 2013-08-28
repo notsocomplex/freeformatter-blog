@@ -1,14 +1,10 @@
 package com.freeformatter.blog;
 
-import java.text.ParseException;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.time.DateUtils;
 
 /**
  * Example of a User class with an equals method that uses more that one field and makes use
@@ -23,8 +19,16 @@ public class EqualsBuilderUser {
 		return name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public Date getDateOfBirth() {
 		return dateOfBirth;
+	}
+	
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public EqualsBuilderUser(final String name, Date dateOfBirth) {
@@ -74,23 +78,6 @@ public class EqualsBuilderUser {
 			.append(name)
 			.append(dateOfBirth)
 			.hashCode();
-	}
-
-	public static void main(String[] args) throws ParseException {
-
-		EqualsBuilderUser user = new EqualsBuilderUser("Peter Parker", DateUtils.parseDate("1962-08-01", "yyyy-MM-dd"));
-		
-		Set<EqualsBuilderUser> users = new HashSet<EqualsBuilderUser>();
-		users.add(user);
-		
-		EqualsBuilderUser toLookup = new EqualsBuilderUser("peter parker", DateUtils.parseDate("1962-08-01", "yyyy-MM-dd"));
-		EqualsBuilderUser wrongDate = new EqualsBuilderUser("peter parker", DateUtils.parseDate("2013-08-01", "yyyy-MM-dd"));
-		
-		System.out.println("These are not the same instances: " + (users != toLookup));
-		System.out.println("The set contains this object for sure: " + users.contains(user));
-		System.out.println("This is a different instance, but is equal regardless: " + users.contains(toLookup));
-		System.out.println("This instance is not equal because the birth date is different: " + !users.contains(wrongDate));
-			
 	}
 	
 }

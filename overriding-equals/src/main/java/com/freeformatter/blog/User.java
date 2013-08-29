@@ -1,40 +1,35 @@
 package com.freeformatter.blog;
 
-
 /**
- * Example of a User class with an equals method that uses a identifier field of type integer
+ * Example of a User class with an equals method that uses an id of type int
  */
 public class User {
 
-	private Integer id;
+	private int id;
 	private String email;
-	
-	public Integer getId() {
+
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public User(final Integer id, final String email) {
-		
+	public User(final int id, final String email) {
+
 		// Very naive validation for the sake of the example
-		if (id == null || id <= 0) {
-			throw new IllegalArgumentException("'id' is required and should be positive");
+		if (id <= 0) {
+			throw new IllegalArgumentException("'id' should be positive");
 		}
-		
+
 		this.id = id;
 		this.email = email;
-		
+
 	}
 
 	@Override
@@ -45,7 +40,8 @@ public class User {
 			return true;
 		}
 
-		// Is it of the proper type? Will also take care of cases where obj argument is null
+		// Is it of the proper type? Will also take care of cases where obj
+		// argument is null
 		if (!(obj instanceof User)) {
 			return false;
 		}
@@ -60,7 +56,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		return new Integer(id).hashCode();
 	}
-	
+
 }

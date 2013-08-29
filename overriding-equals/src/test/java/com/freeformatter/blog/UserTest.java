@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class UserTest {
 
@@ -51,7 +52,7 @@ public class UserTest {
 		assertTrue(user1.equals(user2));
 		
 		// Now we have changed the id, hence they should no longer be equal!
-		user2.setId(2);
+		ReflectionTestUtils.setField(user2, "id", 2);
 		assertFalse(user1.equals(user2));
 		
 	}

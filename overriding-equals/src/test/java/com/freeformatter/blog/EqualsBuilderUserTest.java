@@ -57,6 +57,18 @@ public class EqualsBuilderUserTest {
 		user2.setName("Spider-Man");
 		assertFalse(user1.equals(user2));
 		
+		// Create a new user that is equal
+		user2 = new EqualsBuilderUser("Peter Parker", DateUtils.parseDate("1962-08-01", "yyyy-MM-dd"));
+		assertTrue(user1.equals(user2));
+		
+		// With no more date of birth, this should not be equal
+		user2.setDateOfBirth(null);
+		assertFalse(user1.equals(user2));
+		
+		// Setting the date back should return it to equal
+		user2.setDateOfBirth(DateUtils.parseDate("1962-08-01", "yyyy-MM-dd"));
+		assertTrue(user1.equals(user2));
+		
 	}
 	
 	@Test

@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'com.freeformatter.blog'
+version = '0.1'
+
+project.ext {
+	jacksonVersion = '2.2.+'
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.7'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'com.fasterxml:aalto-xml:0.9.9'
+	compile 'org.apache.commons:commons-lang3:3.+'
+	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:' + project.jacksonVersion
+	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:' + project.jacksonVersion 
+	compile 'com.fasterxml.jackson.core:jackson-annotations:' + project.jacksonVersion
+	compile 'com.fasterxml.jackson.core:jackson-core:' + project.jacksonVersion
+	compile 'com.fasterxml.jackson.core:jackson-databind:' + project.jacksonVersion                                               
+	testCompile 'junit:junit:4.+'
+}

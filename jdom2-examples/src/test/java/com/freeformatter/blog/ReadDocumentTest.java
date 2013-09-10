@@ -66,15 +66,24 @@ public class ReadDocumentTest {
 	public void disableDtdResolutions() throws Exception {
 
 		String xml = "<?xml version = \"1.0\" ?><!DOCTYPE catalog SYSTEM \"catalog.dtd\"><catalog></catalog>";
-		
+
 		SAXBuilder builder = new SAXBuilder(XMLReaders.NONVALIDATING);
 
-	    builder.setFeature("http://xml.org/sax/features/validation", false);
-	    builder.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
-	    builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-		
+		builder.setFeature(
+			"http://xml.org/sax/features/validation", 
+			false
+		);
+		builder.setFeature(
+			"http://apache.org/xml/features/nonvalidating/load-dtd-grammar",
+			false
+		);
+		builder.setFeature(
+			"http://apache.org/xml/features/nonvalidating/load-external-dtd",
+			false
+		);
+
 		Document doc = builder.build(new StringReader(xml));
-		
+
 	}
 		
 }

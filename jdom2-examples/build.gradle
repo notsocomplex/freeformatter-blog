@@ -20,5 +20,6 @@ dependencies {
 	compile 'com.fasterxml:aalto-xml:0.9.6'
 	compile 'org.apache.commons:commons-lang3:3.+'
 	compile 'org.jdom:jdom2:2.+'
+	compile 'jaxen:jaxen:1.+'
 	testCompile 'junit:junit:4.+'
 }

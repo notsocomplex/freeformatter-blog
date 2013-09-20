@@ -1,0 +1,44 @@
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'maven'
+
+group = 'com.freeformatter.blog'
+version = '0.1'
+
+project.ext {
+	commonsVersion = '3.+'
+	springVersion = '3.2+'
+	jeeVersion = '7.+'
+}
+
+war {	
+    manifest {
+        attributes 'Implementation-Title': 'Spring-WS with JAXB through Spring JavaConfiguration', 'Implementation-Version': version
+    }
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.7'
+}
+
+repositories {
+	flatDir { 
+		dirs "lib"
+	}
+	mavenCentral()
+}
+
+dependencies {
+	 
+	compile ':spring-ws:2.1.4.RELEASE-all'
+	compile 'log4j:log4j:1.2.17'
+	compile 'wsdl4j:wsdl4j:1.6.3'
+	compile 'javax.xml.bind:jaxb-api:2.2.11'  
+  	compile 'org.apache.commons:commons-lang3:' + project.commonsVersion
+    compile 'org.springframework:spring-web:' + project.springVersion
+    compile 'org.springframework:spring-webmvc:' + project.springVersion
+    
+    providedCompile 'javax:javaee-web-api:' + project.jeeVersion
+    
+}

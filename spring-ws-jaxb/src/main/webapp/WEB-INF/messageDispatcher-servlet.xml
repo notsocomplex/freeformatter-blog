@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- Scan for stereotypes in the endpoint package (@Endpoint) in our case -->
+	<context:component-scan base-package="com.freeformatter.blog.endpoint"/>
+	
+	<!-- 
+		The magic happens here! This single tag will register the following:
+	
+		End Point Mapping Beans:
+			-PayloadRootAnnotationMethodEndpointMapping
+			-SoapActionAnnotationMethodEndpointMapping
+			-AnnotationActionEndpointMapping
+		
+		End Point Adapter Beans:
+			-DefaultMethodEndpointAdapter
+			-MessageContextMethodArgumentResolver
+			-XPathParamMethodArgumentResolver
+			-SoapMethodArgumentResolver
+			-SourcePayloadMethodProcessor
+			
+		It will conditionally register the following beans IF available on the classpath
+			-Dom4jPayloadMethodProcessor - Maps to org.dom4j.Element
+			-XmlRootElementPayloadMethodProcessor - Maps to javax.xml.bind.Binder
+			-JDomPayloadMethodProcessor - Maps to org.jdom.Element
+			-StaxPayloadMethodArgumentResolver - Maps to javax.xml.stream.XMLInputFactory
+			-XomPayloadMethodProcessor - Maps to nu.xom.Element
+	-->
+ 	<sws:annotation-driven/>	
+
+	<bean id="createUser" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition">
+		<property name="schema" ref="schema" />
+		<property name="portTypeName" value="UserResource" />
+		<property name="locationUri" value="http://localhost:8080/spring-ws-jaxb-0.1/" />
+	</bean>
+
+	<bean id="schema" class="org.springframework.xml.xsd.SimpleXsdSchema">
+		<property name="xsd" value="/WEB-INF/createUserRequest.xsd" />
+	</bean>
+
+</beans>

@@ -35,12 +35,14 @@
 	-->
  	<sws:annotation-driven/>	
 
+	<!-- Create a WSDL definition using the schema -->
 	<bean id="createUser" class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition">
 		<property name="schema" ref="schema" />
 		<property name="portTypeName" value="UserResource" />
 		<property name="locationUri" value="http://localhost:8080/spring-ws-jaxb-0.1/" />
 	</bean>
 
+	<!-- Create a XML Schema (XSD) bean using the .xsd file -->
 	<bean id="schema" class="org.springframework.xml.xsd.SimpleXsdSchema">
 		<property name="xsd" value="/WEB-INF/createUserRequest.xsd" />
 	</bean>

@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'com.freeformatter.blog'
+version = '0.1'
+
+project.ext {
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.7'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.apache.commons:commons-lang3:3.+'
+	compile 'commons-io:commons-io:2.4'                                              
+	testCompile 'junit:junit:4.+'
+}

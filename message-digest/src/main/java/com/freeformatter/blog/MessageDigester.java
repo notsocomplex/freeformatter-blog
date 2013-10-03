@@ -10,7 +10,8 @@ public class MessageDigester {
 
 	public String digest(String input, String algorithm) throws NoSuchAlgorithmException {
 
-		// Create a MessageDigest instance using the name of the algorithm and Bouncy Castle
+		// Create a MessageDigest instance using the name of the algorithm and
+		// Bouncy Castle
 		// as the crypto provider
 		MessageDigest digester = MessageDigest.getInstance(algorithm, new BouncyCastleProvider());
 
@@ -20,15 +21,15 @@ public class MessageDigester {
 		// Digest the bytes
 		byte[] messageDigest = digester.digest();
 
-        StringWriter writer = new StringWriter();
+		StringWriter writer = new StringWriter();
 
-        // Convert the resulting byte into a hex string 
-        for (byte b : messageDigest) {
-        	writer.append(String.format("%02x", b));
-        }
-    
+		// Convert the resulting byte into a hex string
+		for (byte b : messageDigest) {
+			writer.append(String.format("%02x", b));
+		}
+
 		return writer.toString();
 
 	}
-	
+
 }

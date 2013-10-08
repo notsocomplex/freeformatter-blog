@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'com.freeformatter.blog'
+version = '0.1'
+
+project.ext {
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.7'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.springframework:spring-beans:3.2.+'
+	compile 'org.apache.commons:commons-lang3:3.+'
+	compile 'commons-beanutils:commons-beanutils:1.+'                                          
+	testCompile 'junit:junit:4.+'
+}

@@ -4,72 +4,72 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import com.freeformatter.blog.app.ApplicationConfiguration;
+import com.freeformatter.blog.web.config.WebMvcContextConfiguration;
 
 // By implementing WebApplicationInitializer, a servlet container compatible with the latest JEE specs
 // will create a web application. We do this to replace the web.xml.
 public class WebApplicationInitializer implements org.springframework.web.WebApplicationInitializer {
-	
-	private static final String MESSAGE_DISPATCHER_SERVLET_NAME = "dispatcher";
-	
-	// This is the method that gets called to 'start' the application 
+
+	// The name of the dispatcher servlet, equivalent to the servlet-name in web.xml
+	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
+
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		registerListener(servletContext);
 		registerDispatcherServlet(servletContext);
 	}
-	
-	// Create a dispatcher servlet to act as a front controller and to handle incoming requests
+
+	// Register the DispatcherServlet
 	private void registerDispatcherServlet(final ServletContext servletContext) {
 
-		WebApplicationContext webContext = createWebApplicationContext();
-		
-		// Notice that we create a MessageDispatcherServlet that behaves similarly to the
-		// Spring MVC DispatcherServlet.
-		DispatcherServlet messageDispatcherServlet = new DispatcherServlet(webContext);	
-		
-		// Register the MessageDispatcherServlet instance using the name 'dispatcher'
+		// Create our WebApplicationContext using an AnnotationConfigWebApplicationContext based
+		// on the the @Configuration annotated class WebMvcContextConfiguration
+		WebApplicationContext dispatcherContext = createContext(WebMvcContextConfiguration.class);
+
+		// Create an instance of the DispatcherServlet using our WebApplicationContext
+		DispatcherServlet dispatcherServlet = new DispatcherServlet(dispatcherContext);
+
+		// Register the DispatcherServlet in the ServletContext
 		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(
-			MESSAGE_DISPATCHER_SERVLET_NAME, messageDispatcherServlet
+			DISPATCHER_SERVLET_NAME, dispatcherServlet
 		);
 		
-		// Map incoming requests from / and load on startup
+		// Load on startup and handle all mappings from /
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
-	
+
 	}
-	
-	// Register the Spring listeners in the servlet-context
+
 	private void registerListener(ServletContext servletContext) {
-		servletContext.addListener(new ContextLoaderListener(createApplicationContext()));		
+		
+		// Create our WebApplicationContext using an AnnotationConfigWebApplicationContext based
+		// on the the @Configuration annotated class ApplicationConfiguration
+		WebApplicationContext rootContext = createContext(ApplicationConfiguration.class);
+		
+		// The DispatcherServlet automatically detects the application context loaded by
+		// a ContextLoaderListener
+		servletContext.addListener(new ContextLoaderListener(rootContext));
+		
+		// This ServletRequestListener implementation will expose the request to the current
+		// execution thead
 		servletContext.addListener(new RequestContextListener());
+		
 	}
-	
-	// Create a XmlWebApplicationContext instance. The spring mechanism will automatically look 
-	// for the file messageDispatcher-servlet.xml that contains our web beans declaration
-	private WebApplicationContext createWebApplicationContext() {
-		return new XmlWebApplicationContext();
-	}
-	
-	// Create a AnnotationConfigWebApplicationContext that takes @Configuration annotated
-	// configuration class to wire the beans.
-	private AnnotationConfigWebApplicationContext createApplicationContext() {
+
+	private WebApplicationContext createContext(final Class<?>... annotatedClasses) {
+		
+		// Creates a WebApplicationContext based on @Configuration annotations
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.register(ApplicationConfig.class);
+		context.register(annotatedClasses);
 		return context;
+		
 	}
-	
-	@Configuration
-	@ComponentScan("com.freeformatter.blog")
-	private class ApplicationConfig {
-		// Add logic to create beans and other non-stereotyped classes here		
-	}
-	
+
 }
